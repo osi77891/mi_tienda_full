@@ -2,7 +2,7 @@
 import logo from './logo.svg';
 //import './App.css';
 import React, { useState } from 'react';
-import ListaProductos from '../client/src/ListaProductos';
+import ListaProductos from './ListaProductos';
   function App() {
   const [busqueda, setBusqueda] = useState('');
 
