@@ -12,8 +12,9 @@ function ListaProductos() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [busqueda, setBusqueda] = useState('');
 
+  const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
   useEffect(() => {
-    fetch('http://localhost:3001/productos')
+    fetch(`${BASE_URL}/productos`)
       .then(res => res.json())
       .then(data => setProductos(data))
       .catch(err => console.error('Error:', err));
