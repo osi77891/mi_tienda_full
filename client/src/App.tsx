@@ -12,7 +12,10 @@ import ListaProductos from './ListaProductos';
   return (
     <div className="App">
       <header>
-        <h1> PRODUCTOS DE MI TIENDA FAVORITA HALLY</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <img src={logo} alt="Logo" style={{ width: '40px', height: '40px' }} />
+        <h1> LA TIENDA TIENDA DE HALLY</h1>
+      </div>
       </header>
       <div>
       </div>
