@@ -12,7 +12,7 @@ import ListaProductos from './ListaProductos';
   return (
     <div className="App">
       <header>
-        <h1> PRODUCTOS MI TIENDA</h1>
+        <h1> PRODUCTOS DE MI TIENDA FAVORITA</h1>
       </header>
       <div>
       </div>
