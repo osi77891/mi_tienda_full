@@ -118,7 +118,11 @@ function Post({ cerrar }: { cerrar: () => void }) {
           <select
             name="id"
             value={form.id}
-            onChange={(e) => seleccionarProducto(e.target.value)}
+            onChange={async (e) => {
+              const id = e.target.value;
+              setForm(prev => ({ ...prev, id }));
+              await seleccionarProducto(id);
+            }}
             style={{ width: '100%' }}
           >
             <option value="">Nuevo producto</option>
@@ -128,6 +132,7 @@ function Post({ cerrar }: { cerrar: () => void }) {
               </option>
             ))}
           </select>
+
 
           <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="venta" placeholder="Venta" value={form.venta} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
