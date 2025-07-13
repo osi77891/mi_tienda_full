@@ -1,3 +1,4 @@
+//server.js
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db'); // Asegúrate que apunta al db.js local
@@ -8,7 +9,8 @@ app.use(express.json());
 
 app.get('/productos', async (req, res) => {
   try {
-    const result = await pool.query('SELECT id, nombre, venta, foto FROM productos');
+    //const result = await pool.query('SELECT id, nombre, venta, foto FROM productos');
+    const result = await pool.query('SELECT * FROM productos');
     res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener productos:', err); // 🔥 muestra el error completo
