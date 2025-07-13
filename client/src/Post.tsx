@@ -3,16 +3,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 type Producto = {
-    id?: string; // 👈 ahora es opcional
-    nombre: string;
-    venta: string;
-    costo: string;
-    cantidad: string;
-    precio_p: string;
-    categoria: string;
-    fecha_v: string;
-    foto?: string;
-  };
+  id?: string;
+  nombre: string;
+  venta: string;
+  costo: string;
+  cantidad: string;
+  precio_p: string;
+  categoria: string;
+  fecha_v: string;
+  foto?: string;
+};
+
 function Post({ cerrar }: { cerrar: () => void }) {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [form, setForm] = useState<Producto>({
@@ -27,17 +28,17 @@ function Post({ cerrar }: { cerrar: () => void }) {
     foto: ''
   });
 
+  // ✅ Cargar lista de productos (para select)
   useEffect(() => {
-    axios.get<Producto[]>('/api/productos')
+    axios
+      .get<Producto[]>('http://localhost:3001/productos')
       .then(res => setProductos(res.data))
       .catch(err => console.error(err));
   }, []);
+  
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const seleccionarProducto = (id: string) => {
+  // ✅ Cargar datos de producto seleccionado
+  const seleccionarProducto = async (id: string) => {
     if (!id) {
       setForm({
         id: '',
@@ -53,14 +54,23 @@ function Post({ cerrar }: { cerrar: () => void }) {
       return;
     }
 
-    const producto = productos.find(p => p.id === id);
-    if (producto) setForm(producto);
+    try {
+        const res = await axios.get<Producto>(`http://localhost:3001/productos/${id}`);
+
+      setForm(res.data);
+    } catch (error) {
+      console.error(error);
+      alert('Error al cargar el producto');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validar campos requeridos
     const { id, nombre, venta, costo, cantidad, precio_p, categoria, fecha_v } = form;
     if (!nombre || !venta || !costo || !cantidad || !precio_p || !categoria || !fecha_v) {
       alert('Por favor, completa todos los campos requeridos.');
@@ -70,17 +80,17 @@ function Post({ cerrar }: { cerrar: () => void }) {
     try {
       if (form.id && productos.some(p => p.id === form.id)) {
         // Actualizar
-        await axios.put(`/api/productos/${form.id}`, form);
+        await axios.put(`http://localhost:3001/productos/${form.id}`, form);
         alert('Producto actualizado');
       } else {
         // Insertar
         const nuevoForm = { ...form };
         delete nuevoForm.id;
-        await axios.post('/api/productos', nuevoForm);
+        await axios.post('http://localhost:3001/productos', nuevoForm);
         alert('Producto agregado');
       }
 
-      cerrar(); // Cerrar modal
+      cerrar(); // Cierra la ventana
     } catch (err) {
       console.error(err);
       alert('Ocurrió un error al guardar el producto.');
@@ -105,10 +115,17 @@ function Post({ cerrar }: { cerrar: () => void }) {
 
         <form onSubmit={handleSubmit}>
           <label>ID (elige para editar o deja vacío para nuevo)</label>
-          <select name="id" value={form.id} onChange={(e) => seleccionarProducto(e.target.value)} style={{ width: '100%' }}>
+          <select
+            name="id"
+            value={form.id}
+            onChange={(e) => seleccionarProducto(e.target.value)}
+            style={{ width: '100%' }}
+          >
             <option value="">Nuevo producto</option>
             {productos.map(p => (
-              <option key={p.id} value={p.id}>{p.id}</option>
+              <option key={p.id} value={p.id}>
+                {p.id} - {p.nombre}
+              </option>
             ))}
           </select>
 
