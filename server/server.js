@@ -10,7 +10,7 @@ app.use(express.json());
 // server.js
 app.get('/productos', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM productos'); // 👈 usa SELECT *
+    const result = await pool.query('SELECT * FROM productos order by id desc'); // 👈 usa SELECT *
     res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener productos:', err);
