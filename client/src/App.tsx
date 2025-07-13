@@ -17,14 +17,13 @@ import Post from './Post';
           justifyContent: 'space-between',
           padding: '10px'
         }}>
-          <button onClick={() => setMostrarPost(true)} style={{ fontSize: '16px' }}>
-            ➕ Agregar
-          </button>
-
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <img src={logo} alt="Logo" style={{ width: '100px', height: '50px' }} />
             <h1>LA TIENDA TIENDA DE HALLY</h1>
           </div>
+          <button onClick={() => setMostrarPost(true)} style={{ fontSize: '16px' }}>
+            ➕ Agregar
+          </button>
         </div>
       </header>
       <div>
@@ -32,6 +31,7 @@ import Post from './Post';
       <main>
         <ListaProductos></ListaProductos>
       </main>
+      {mostrarPost && <Post cerrar={() => setMostrarPost(false)} />}
     </div>
   );
 }
