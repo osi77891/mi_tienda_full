@@ -28,18 +28,19 @@ function Post({ cerrar }: { cerrar: () => void }) {
     foto: ''
   });
 
-  // ✅ Cargar lista de productos (para select)
-      useEffect(() => {
-      axios
-        .get<Producto[]>('http://localhost:3001/productos')
-        .then(res => {
-          console.log("🧾 Productos cargados:", res.data); // <--- agrega esto
-          setProductos(res.data);
-        })
-        .catch(err => console.error(err));
-    }, []);
+  // Define la URL base para la API (usa variable de entorno o localhost)
+  const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
-  
+  // ✅ Cargar lista de productos (para select)
+  useEffect(() => {
+    axios
+      .get<Producto[]>(`${BASE_URL}/productos`)
+      .then(res => {
+        console.log("🧾 Productos cargados:", res.data);
+        setProductos(res.data);
+      })
+      .catch(err => console.error(err));
+  }, [BASE_URL]);
 
   // ✅ Cargar datos de producto seleccionado
   const seleccionarProducto = async (id: string) => {
@@ -59,8 +60,7 @@ function Post({ cerrar }: { cerrar: () => void }) {
     }
 
     try {
-        const res = await axios.get<Producto>(`http://localhost:3001/productos/${id}`);
-
+      const res = await axios.get<Producto>(`${BASE_URL}/productos/${id}`);
       setForm(res.data);
     } catch (error) {
       console.error(error);
@@ -84,13 +84,13 @@ function Post({ cerrar }: { cerrar: () => void }) {
     try {
       if (form.id && productos.some(p => p.id === form.id)) {
         // Actualizar
-        await axios.put(`http://localhost:3001/productos/${form.id}`, form);
+        await axios.put(`${BASE_URL}/productos/${form.id}`, form);
         alert('Producto actualizado');
       } else {
         // Insertar
         const nuevoForm = { ...form };
         delete nuevoForm.id;
-        await axios.post('http://localhost:3001/productos', nuevoForm);
+        await axios.post(`${BASE_URL}/productos`, nuevoForm);
         alert('Producto agregado');
       }
 
@@ -136,7 +136,6 @@ function Post({ cerrar }: { cerrar: () => void }) {
               </option>
             ))}
           </select>
-
 
           <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="venta" placeholder="Venta" value={form.venta} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
