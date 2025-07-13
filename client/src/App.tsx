@@ -13,7 +13,7 @@ import ListaProductos from './ListaProductos';
     <div className="App">
       <header>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <img src={logo} alt="Logo" style={{ width: '100px', height: '70px' }} />
+        <img src={logo} alt="Logo" style={{ width: '100px', height: '50px' }} />
         <h1> LA TIENDA TIENDA DE HALLY</h1>
       </div>
       </header>
