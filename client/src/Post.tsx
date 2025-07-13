@@ -73,33 +73,41 @@ function Post({ cerrar }: { cerrar: () => void }) {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const { id, nombre, venta, costo, cantidad, precio_p, categoria, fecha_v } = form;
-    if (!nombre || !venta || !costo || !cantidad || !precio_p || !categoria || !fecha_v) {
-      alert('Por favor, completa todos los campos requeridos.');
-      return;
+  const { id, nombre, venta, costo, cantidad, precio_p, categoria, fecha_v } = form;
+  if (!nombre || !venta || !costo || !cantidad || !precio_p || !categoria || !fecha_v) {
+    alert('Por favor, completa todos los campos requeridos.');
+    return;
+  }
+
+  try {
+    if (form.id && productos.some(p => p.id === form.id)) {
+      // Actualizar producto
+      const res = await axios.put<Producto>(`${BASE_URL}/productos/${form.id}`, form);
+      const productoActualizado = res.data;
+      setProductos(prevProductos =>
+        prevProductos.map(p => (p.id === productoActualizado.id ? productoActualizado : p))
+      );
+      alert('Producto actualizado');
+    } else {
+      // Insertar nuevo producto
+      const nuevoForm = { ...form };
+      delete nuevoForm.id;
+      const res = await axios.post<Producto>(`${BASE_URL}/productos`, nuevoForm);
+      const productoCreado = res.data;
+      setProductos(prevProductos => [...prevProductos, productoCreado]);
+      alert('Producto agregado');
     }
 
-    try {
-      if (form.id && productos.some(p => p.id === form.id)) {
-        // Actualizar
-        await axios.put(`${BASE_URL}/productos/${form.id}`, form);
-        alert('Producto actualizado');
-      } else {
-        // Insertar
-        const nuevoForm = { ...form };
-        delete nuevoForm.id;
-        await axios.post(`${BASE_URL}/productos`, nuevoForm);
-        alert('Producto agregado');
-      }
+    cerrar(); // Cierra la ventana/modal
+  } catch (err) {
+    console.error(err);
+    alert('Ocurrió un error al guardar el producto.');
+  }
+};
 
-      cerrar(); // Cierra la ventana
-    } catch (err) {
-      console.error(err);
-      alert('Ocurrió un error al guardar el producto.');
-    }
-  };
+
 
   return (
     <div style={{
