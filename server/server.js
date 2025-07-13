@@ -7,16 +7,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// server.js
 app.get('/productos', async (req, res) => {
   try {
-    //const result = await pool.query('SELECT id, nombre, venta, foto FROM productos');
-    const result = await pool.query('SELECT * FROM productos');
+    const result = await pool.query('SELECT * FROM productos'); // 👈 usa SELECT *
     res.json(result.rows);
   } catch (err) {
-    console.error('Error al obtener productos:', err); // 🔥 muestra el error completo
-  res.status(500).send('Error del servidor');
+    console.error('Error al obtener productos:', err);
+    res.status(500).send('Error del servidor');
   }
 });
+
 app.get('/productos/:id', async (req, res) => {
   const { id } = req.params;
   try {

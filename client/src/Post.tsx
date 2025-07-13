@@ -29,12 +29,16 @@ function Post({ cerrar }: { cerrar: () => void }) {
   });
 
   // ✅ Cargar lista de productos (para select)
-  useEffect(() => {
-    axios
-      .get<Producto[]>('http://localhost:3001/productos')
-      .then(res => setProductos(res.data))
-      .catch(err => console.error(err));
-  }, []);
+      useEffect(() => {
+      axios
+        .get<Producto[]>('http://localhost:3001/productos')
+        .then(res => {
+          console.log("🧾 Productos cargados:", res.data); // <--- agrega esto
+          setProductos(res.data);
+        })
+        .catch(err => console.error(err));
+    }, []);
+
   
 
   // ✅ Cargar datos de producto seleccionado
