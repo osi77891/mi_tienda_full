@@ -146,10 +146,10 @@ function Post({ cerrar }: { cerrar: () => void }) {
           </select>
 
           <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
-          <input name="venta" placeholder="Venta" value={form.venta} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
+          <input name="venta" placeholder="Precio de Venta" value={form.venta} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="costo" placeholder="Costo" value={form.costo} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="cantidad" placeholder="Cantidad" value={form.cantidad} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
-          <input name="precio_p" placeholder="Precio Público" value={form.precio_p} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
+          <input name="precio_p" placeholder="Precio Paquete" value={form.precio_p} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="categoria" placeholder="Categoría" value={form.categoria} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="fecha_v" type="date" placeholder="Fecha Vencimiento" value={form.fecha_v} onChange={handleChange} required style={{ width: '100%', marginTop: '10px' }} />
           <input name="foto" placeholder="Link de la Foto (opcional)" value={form.foto} onChange={handleChange} style={{ width: '100%', marginTop: '10px' }} />

@@ -1,5 +1,5 @@
-//import React from 'react';
-import logo from './logo.svg';
+/*//import React from 'react';
+//import logo from './logo.svg';
 //import './App.css';
 import React, { useState } from 'react';
 import ListaProductos from '../client/src/ListaProductos';
@@ -24,3 +24,4 @@ import ListaProductos from '../client/src/ListaProductos';
 }
 
 export default App;
+*/

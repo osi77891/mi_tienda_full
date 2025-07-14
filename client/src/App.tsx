@@ -18,7 +18,16 @@ import Post from './Post';
           padding: '10px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img src={logo} alt="Logo" style={{ width: '100px', height: '50px' }} />
+            <img
+              src={logo}
+              alt="Logo"
+              style={{
+                width: '100px',
+                height: '50px',
+                borderRadius: '12px', // para bordes redondeados
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' // para la sombra
+              }}
+            />
             <h1>LA TIENDA TIENDA DE HALLY BUBU</h1>
           </div>
           <button onClick={() => setMostrarPost(true)} style={{ fontSize: '16px' }}>
