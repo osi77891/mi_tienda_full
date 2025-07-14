@@ -28,7 +28,7 @@ import Post from './Post';
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' // para la sombra
               }}
             />
-            <h1>LA TIENDA TIENDA DE HALLY BUBU</h1>
+            <h1>LA TIENDA DE HALLY BUBU</h1>
           </div>
           <button onClick={() => setMostrarPost(true)} style={{ fontSize: '16px' }}>
             ➕ Agregar
